@@ -78,7 +78,7 @@ export default function Header({ result }: Props) {
             fontFamily: "'JetBrains Mono', monospace",
           }}
         >
-          v0.1.0
+          {`v${chrome.runtime.getManifest().version}`}
         </div>
       </div>
 

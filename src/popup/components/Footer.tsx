@@ -1,11 +1,24 @@
+import type { PipelineResult } from "../../analysis/types";
+
 interface Props {
-  analyzedAt: number;
-  durationMs: number;
+  result: PipelineResult;
 }
 
-export default function Footer({ analyzedAt, durationMs }: Props) {
-  const date = new Date(analyzedAt).toLocaleDateString();
-  const duration = (durationMs / 1000).toFixed(1);
+export default function Footer({ result }: Props) {
+  const date = new Date(result.analyzedAt).toLocaleDateString();
+  const duration = (result.durationMs / 1000).toFixed(1);
+
+  const handleExport = () => {
+    const blob = new Blob([JSON.stringify(result, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `tokenlens-report-${new Date(result.analyzedAt).toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div
@@ -28,6 +41,7 @@ export default function Footer({ analyzedAt, durationMs }: Props) {
         Analyzed in {duration}s · {date}
       </span>
       <button
+        onClick={handleExport}
         style={{
           background: "linear-gradient(135deg, #06b6d4, #8b5cf6)",
           border: "none",

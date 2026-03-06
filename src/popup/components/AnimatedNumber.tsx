@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Props {
   target: number;
@@ -7,20 +7,24 @@ interface Props {
 
 export default function AnimatedNumber({ target, duration = 1200 }: Props) {
   const [current, setCurrent] = useState(0);
+  const rafId = useRef(0);
 
   useEffect(() => {
-    let start = 0;
-    const step = target / (duration / 16);
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        setCurrent(target);
-        clearInterval(timer);
+    const startTime = performance.now();
+
+    function tick(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      setCurrent(Math.floor(progress * target));
+      if (progress < 1) {
+        rafId.current = requestAnimationFrame(tick);
       } else {
-        setCurrent(Math.floor(start));
+        setCurrent(target);
       }
-    }, 16);
-    return () => clearInterval(timer);
+    }
+
+    rafId.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId.current);
   }, [target, duration]);
 
   return <span>{current.toLocaleString()}</span>;

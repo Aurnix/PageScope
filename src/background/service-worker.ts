@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(
         .then((r) => r.text())
         .then((html) => sendResponse({ html }))
         .catch((err: Error) => sendResponse({ error: err.message }));
-      return true;
     }
+    return true;
   }
 );

@@ -51,8 +51,6 @@ export const STAGE_META: StageMeta[] = [
   },
 ];
 
-export const CHUNK_SIZE_TOKENS = 512;
-
 export const GRADE_THRESHOLDS = [
   { min: 90, grade: "A", color: "#22c55e" },
   { min: 75, grade: "B", color: "#22c55e" },

@@ -41,12 +41,6 @@ export interface Issue {
   text: string;
 }
 
-export interface ChunkResult {
-  headingContext: string;
-  content: string;
-  tokens: number;
-}
-
 export interface PageData {
   renderedHtml: string;
   url: string;
