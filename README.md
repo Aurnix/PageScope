@@ -27,7 +27,18 @@ Analyzes the current page through a 5-stage reduction pipeline:
 - **Scores** — Content density, JS independence, front-loading, and extractability ratings (A-F)
 - **Issues** — Diagnostic warnings like JS-rendered content, missing meta descriptions, stale dates
 
-## Getting Started
+## Quick Start (pre-built)
+
+No build step required — a pre-built version is included in the repo.
+
+1. Clone or download this repository
+2. Open `chrome://extensions`
+3. Enable **Developer mode** (top right)
+4. Click **Load unpacked**
+5. Select the **`extension/`** folder
+6. Navigate to any webpage and click the TokenLens icon
+
+## Development
 
 ### Prerequisites
 
@@ -41,13 +52,7 @@ npm install
 npm run build
 ```
 
-### Load in Chrome
-
-1. Open `chrome://extensions`
-2. Enable **Developer mode** (top right)
-3. Click **Load unpacked**
-4. Select the `dist/` folder
-5. Navigate to any webpage and click the TokenLens icon
+Then load the `dist/` folder as an unpacked extension (same steps as above, but use `dist/` instead of `extension/`).
 
 ### Development
 
