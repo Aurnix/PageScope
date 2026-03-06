@@ -1,0 +1,2 @@
+(function(){chrome.runtime.onMessage.addListener((t,u,n)=>{var e;if(t.type==="ANALYZE_PAGE"){const o=document.documentElement.outerHTML,r=window.location.href,c=((e=document.querySelector('meta[name="description"]'))==null?void 0:e.getAttribute("content"))??"",m=Array.from(document.querySelectorAll('script[type="application/ld+json"]')).map(s=>s.textContent??"");n({rawHtml:o,url:r,meta:c,jsonLd:m})}return!0});
+})()
