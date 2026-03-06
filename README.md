@@ -101,7 +101,3 @@ src/
 ├── popup/          # React popup UI (components, hooks, styles)
 └── shared/         # Types and constants
 ```
-
-## License
-
-MIT
