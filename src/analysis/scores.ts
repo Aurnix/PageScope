@@ -112,7 +112,10 @@ export function computeExtractability(markdownContent: string): Score {
   for (const sentence of sentences) {
     const words = sentence.split(/\s+/);
     const hasReasonableLength = words.length <= 30;
-    const hasSpecifics = /\d/.test(sentence) || /[A-Z][a-z]+/.test(sentence);
+    const hasNumber = /\d/.test(sentence);
+    const hasMidCap = words.slice(1).some((w) => /^[A-Z]/.test(w));
+    const hasQuoted = /["\u201C].+?["\u201D]/.test(sentence);
+    const hasSpecifics = hasNumber || hasMidCap || hasQuoted;
     const doesntStartWithPronoun =
       !/^(it|this|that|they|we|he|she)\b/i.test(sentence);
 

@@ -59,7 +59,7 @@ const rules: IssueRule[] = [
 
   // H1 missing or unhelpful
   (ctx) => {
-    const h1Match = ctx.renderedHtml.match(/<h1[^>]*>(.*?)<\/h1>/i);
+    const h1Match = ctx.renderedHtml.match(/<h1[\s\S]*?<\/h1>/i);
     if (!h1Match) {
       return {
         severity: "warning",

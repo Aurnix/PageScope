@@ -28,8 +28,12 @@ export function analyzePage(input: PipelineInput): PipelineResult {
   // Stage 3: Content only (Readability on fetched HTML)
   const renderedArticle = extractContent(input.renderedHtml);
   const fetchedArticle = extractContent(fetchedHtml);
+  const renderedContentTokens = countTokens(renderedArticle.content);
+  const fetchedContentTokens = countTokens(fetchedArticle.content);
   const cleanedHtml = fetchedArticle.content || renderedArticle.content;
-  const cleanedTokens = countTokens(cleanedHtml);
+  const cleanedTokens = fetchedArticle.content
+    ? fetchedContentTokens
+    : renderedContentTokens;
   const title = fetchedArticle.title || renderedArticle.title;
 
   // Stage 4: Markdown conversion
@@ -45,10 +49,6 @@ export function analyzePage(input: PipelineInput): PipelineResult {
     markdown
   );
   const snippetTokens = countTokens(snippetText);
-
-  // Token counts for scoring
-  const renderedContentTokens = countTokens(renderedArticle.content);
-  const fetchedContentTokens = countTokens(fetchedArticle.content);
 
   // Scores
   const scores = computeScores({
@@ -95,8 +95,9 @@ export function analyzePage(input: PipelineInput): PipelineResult {
 }
 
 function extractOgDescription(html: string): string {
-  const match = html.match(
-    /<meta\s+(?:property|name)="og:description"\s+content="([^"]*)"/i
-  );
-  return match?.[1] ?? "";
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const el =
+    doc.querySelector('meta[property="og:description"]') ??
+    doc.querySelector('meta[name="og:description"]');
+  return el?.getAttribute("content") ?? "";
 }

@@ -21,11 +21,6 @@ export default function App() {
         overflow: "hidden",
       }}
     >
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
-        rel="stylesheet"
-      />
-
       {loading && (
         <div
           style={{
@@ -80,7 +75,7 @@ export default function App() {
             {activeTab === "scores" && <ScoresTab scores={result.scores} />}
             {activeTab === "issues" && <IssuesTab issues={result.issues} />}
           </div>
-          <Footer analyzedAt={result.analyzedAt} durationMs={result.durationMs} />
+          <Footer result={result} />
         </>
       )}
     </div>
