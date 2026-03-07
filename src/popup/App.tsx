@@ -16,7 +16,7 @@ export default function App() {
   return (
     <div
       style={{
-        width: 400,
+        width: 520,
         fontFamily: "'DM Sans', sans-serif",
         background: "#0f1219",
         overflow: "hidden",
@@ -62,7 +62,7 @@ export default function App() {
           <Header result={result} />
           <Explainer />
           <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
-          <div style={{ maxHeight: 420, overflowY: "auto" }}>
+          <div style={{ maxHeight: 560, overflowY: "auto" }}>
             {activeTab === "funnel" && <FunnelTab stages={result.stages} />}
             {activeTab === "preview" && (
               <AIViewTab
