@@ -6,7 +6,8 @@ describe("countTokens", () => {
     expect(countTokens("")).toBe(0);
   });
 
-  it("returns 0 for null/undefined input", () => {
+  it("returns 0 for falsy input", () => {
+    // countTokens guards against falsy values at runtime even though TS types require string
     expect(countTokens("")).toBe(0);
   });
 

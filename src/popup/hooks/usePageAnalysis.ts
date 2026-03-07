@@ -49,7 +49,12 @@ export function usePageAnalysis() {
               type: "FETCH_RAW_HTML",
               url: tab.url,
             });
-          fetchedHtml = rawData.html ?? "";
+          if (rawData.error) {
+            console.warn(`Raw HTML fetch failed: ${rawData.error}`);
+            fetchedHtml = pageData.rawHtml;
+          } else {
+            fetchedHtml = rawData.html ?? "";
+          }
         } catch {
           // If fetch fails (CORS, auth, etc.), fall back to rendered HTML
           fetchedHtml = pageData.rawHtml;
@@ -66,9 +71,16 @@ export function usePageAnalysis() {
 
         setResult(pipelineResult);
       } catch (e) {
-        setError(
-          e instanceof Error ? e.message : "An unexpected error occurred."
-        );
+        const msg = e instanceof Error ? e.message : "";
+        if (msg.includes("Could not establish connection")) {
+          setError("Could not connect to this page. Try reloading it first.");
+        } else if (msg.includes("Cannot access")) {
+          setError(
+            "Cannot analyze this page type. Navigate to a website first."
+          );
+        } else {
+          setError(msg || "An unexpected error occurred.");
+        }
       } finally {
         setLoading(false);
       }

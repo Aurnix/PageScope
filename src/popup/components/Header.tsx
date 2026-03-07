@@ -8,7 +8,7 @@ interface Props {
 export default function Header({ result }: Props) {
   const rawTokens = result.stages[0]?.tokens ?? 0;
   const aiTokens = result.stages.find((s) => s.id === "markdown")?.tokens ?? 0;
-  const wastePct = rawTokens > 0 ? Math.round((1 - aiTokens / rawTokens) * 100) : 0;
+  const wastePct = rawTokens > 0 ? Math.max(0, Math.round((1 - aiTokens / rawTokens) * 100)) : 0;
 
   // Truncate URL for display
   const displayUrl = result.url

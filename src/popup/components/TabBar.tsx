@@ -1,9 +1,11 @@
+export type TabId = "funnel" | "preview" | "scores" | "issues";
+
 interface Props {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
+  activeTab: TabId;
+  onTabChange: (tab: TabId) => void;
 }
 
-const tabs = [
+const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: "funnel", label: "Token Funnel", icon: "📊" },
   { id: "preview", label: "AI View", icon: "👁" },
   { id: "scores", label: "Scores", icon: "📋" },
