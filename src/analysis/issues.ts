@@ -84,9 +84,18 @@ const rules: IssueRule[] = [
 
   // FAQ schema (positive)
   (ctx) => {
-    const hasFaq = ctx.jsonLd.some(
-      (ld) => ld.includes("FAQPage") || ld.includes("Question")
-    );
+    const hasFaq = ctx.jsonLd.some((ld) => {
+      try {
+        const obj = JSON.parse(ld);
+        const type = obj["@type"];
+        if (Array.isArray(type)) {
+          return type.some((t: string) => t === "FAQPage" || t === "Question");
+        }
+        return type === "FAQPage" || type === "Question";
+      } catch {
+        return false;
+      }
+    });
     if (hasFaq) {
       return {
         severity: "info",
@@ -99,21 +108,26 @@ const rules: IssueRule[] = [
   // dateModified freshness
   (ctx) => {
     for (const ld of ctx.jsonLd) {
-      const match = ld.match(/"dateModified"\s*:\s*"([^"]+)"/);
-      if (match) {
-        const date = new Date(match[1]);
-        const monthsAgo =
-          (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 30);
-        if (monthsAgo > 6) {
+      try {
+        const obj = JSON.parse(ld);
+        if (obj.dateModified) {
+          const date = new Date(obj.dateModified);
+          if (isNaN(date.getTime())) continue;
+          const monthsAgo =
+            (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24 * 30);
+          if (monthsAgo > 6) {
+            return {
+              severity: "warning",
+              text: `dateModified is ${Math.round(monthsAgo)} months old — AI systems favor recent content`,
+            };
+          }
           return {
-            severity: "warning",
-            text: `dateModified is ${Math.round(monthsAgo)} months old — AI systems favor recent content`,
+            severity: "info",
+            text: "dateModified present in JSON-LD",
           };
         }
-        return {
-          severity: "info",
-          text: "dateModified present in JSON-LD",
-        };
+      } catch {
+        continue;
       }
     }
     return null;
@@ -127,7 +141,10 @@ const rules: IssueRule[] = [
       .split(/\s+/)
       .filter((w) => w.length > 3);
     const first150 = ctx.markdownContent.slice(0, 150).toLowerCase();
-    const found = titleWords.filter((w) => first150.includes(w)).length;
+    const found = titleWords.filter((w) => {
+      const pattern = new RegExp(`\\b${w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`);
+      return pattern.test(first150);
+    }).length;
     const ratio =
       titleWords.length > 0 ? found / titleWords.length : 0;
     if (ratio < 0.3) {

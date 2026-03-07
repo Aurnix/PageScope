@@ -77,7 +77,8 @@ export function computeFrontLoading(
 
   let found = 0;
   for (const word of titleWords) {
-    if (first150.includes(word) || firstParagraph.includes(word)) {
+    const pattern = new RegExp(`\\b${word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`);
+    if (pattern.test(first150) || pattern.test(firstParagraph)) {
       found++;
     }
   }

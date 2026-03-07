@@ -144,6 +144,33 @@ describe("detectIssues", () => {
       expect(faqIssue).toBeDefined();
       expect(faqIssue!.severity).toBe("info");
     });
+
+    it("does not false-positive on text containing 'Question'", () => {
+      const issues = detectIssues(
+        makeCtx({
+          jsonLd: [
+            JSON.stringify({
+              "@type": "Article",
+              headline: "Answering Your Question About React",
+            }),
+          ],
+        })
+      );
+      const faqIssue = issues.find((i) => i.text.includes("FAQ"));
+      expect(faqIssue).toBeUndefined();
+    });
+  });
+
+  describe("malformed JSON-LD resilience", () => {
+    it("handles invalid JSON-LD gracefully", () => {
+      const issues = detectIssues(
+        makeCtx({
+          jsonLd: ["not valid json {{{", "also broken"],
+        })
+      );
+      // Should not crash, should report no JSON-LD issues related to FAQ/date
+      expect(Array.isArray(issues)).toBe(true);
+    });
   });
 
   describe("dateModified freshness rule", () => {

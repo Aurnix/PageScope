@@ -40,15 +40,3 @@ export interface Issue {
   severity: "critical" | "warning" | "info";
   text: string;
 }
-
-export interface PageData {
-  renderedHtml: string;
-  url: string;
-  meta: string;
-  jsonLd: string[];
-}
-
-export interface RawFetchData {
-  html: string;
-  error?: string;
-}
