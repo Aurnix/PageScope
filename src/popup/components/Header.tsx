@@ -8,7 +8,8 @@ interface Props {
 export default function Header({ result }: Props) {
   const rawTokens = result.stages[0]?.tokens ?? 0;
   const aiTokens = result.stages.find((s) => s.id === "markdown")?.tokens ?? 0;
-  const wastePct = rawTokens > 0 ? Math.max(0, Math.round((1 - aiTokens / rawTokens) * 100)) : 0;
+  const aiVisiblePct = rawTokens > 0 ? Math.max(0, Math.round((aiTokens / rawTokens) * 100)) : 0;
+  const badgeColor = aiVisiblePct >= 15 ? "#22c55e" : aiVisiblePct >= 5 ? "#eab308" : "#ef4444";
 
   // Truncate URL for display
   const displayUrl = result.url
@@ -177,8 +178,8 @@ export default function Header({ result }: Props) {
         <div
           style={{
             marginLeft: "auto",
-            background: "rgba(239,68,68,0.1)",
-            border: "1px solid rgba(239,68,68,0.2)",
+            background: `${badgeColor}1a`,
+            border: `1px solid ${badgeColor}33`,
             borderRadius: 6,
             padding: "6px 10px",
             textAlign: "center",
@@ -188,21 +189,21 @@ export default function Header({ result }: Props) {
             style={{
               fontSize: 18,
               fontWeight: 700,
-              color: "#ef4444",
+              color: badgeColor,
               fontFamily: "'JetBrains Mono', monospace",
             }}
           >
-            {wastePct}%
+            {aiVisiblePct}%
           </div>
           <div
             style={{
               fontSize: 9,
-              color: "#ef4444",
+              color: badgeColor,
               textTransform: "uppercase",
               letterSpacing: "0.05em",
             }}
           >
-            wasted
+            ai-visible
           </div>
         </div>
       </div>

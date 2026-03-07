@@ -24,7 +24,7 @@ const rules: IssueRule[] = [
     if (jsDependentPct > 0.3) {
       return {
         severity: "critical",
-        text: `${Math.round(jsDependentPct * 100)}% of content requires JavaScript — invisible to ChatGPT, Claude, and Gemini crawlers`,
+        text: `${Math.round(jsDependentPct * 100)}% of your content requires JavaScript to render \u2014 AI crawlers from ChatGPT, Claude, Perplexity, and Gemini won\u2019t see it`,
       };
     }
     if (jsDependentPct > 0.1) {
@@ -41,7 +41,7 @@ const rules: IssueRule[] = [
     if (!ctx.meta) {
       return {
         severity: "critical",
-        text: "No meta description found — AI systems have no summary of your page",
+        text: "No meta description found \u2014 when AI cites your page, it has no summary to pull from. This is your most important AI-facing content.",
       };
     }
     if (ctx.meta.length > 160) {
@@ -76,7 +76,7 @@ const rules: IssueRule[] = [
     if (ctx.jsonLd.length === 0) {
       return {
         severity: "warning",
-        text: "No JSON-LD structured data detected — consider adding schema markup",
+        text: "No JSON-LD structured data found. Schema markup helps AI systems understand what your page is about and extract structured facts.",
       };
     }
     return null;

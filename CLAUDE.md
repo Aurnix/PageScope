@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-TokenLens is a Chrome extension (Manifest V3) that analyzes webpages to show publishers what LLMs actually see when consuming their content. It visualizes a 5-stage token reduction pipeline with diagnostic scores and issues.
+TokenLens is a Chrome extension (Manifest V3) that shows publishers what AI systems actually see when they read a webpage. Your website talks to browsers — TokenLens shows you what it says to AI. It visualizes a 5-stage token reduction pipeline with diagnostic scores and actionable issues, framed as a diagnostic tool (not a criticism of site design).
 
 ## Commands
 
