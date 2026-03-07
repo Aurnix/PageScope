@@ -1,6 +1,6 @@
 {
   "../../../@crx/manifest": {
-    "file": "assets/crx-manifest.js-D-GxP4LN.js",
+    "file": "assets/crx-manifest.js-C1FvjKE2.js",
     "name": "crx-manifest.js",
     "src": "../../../@crx/manifest",
     "isEntry": true
@@ -18,7 +18,7 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-C0_6BlDd.js",
+    "file": "assets/index.html-Df14m7Bg.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,

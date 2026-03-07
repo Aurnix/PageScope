@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { StageResult } from "../../analysis/types";
+import { STAGE_HINTS } from "../../shared/constants";
 import FunnelBar from "./FunnelBar";
+import CrawlerInfo from "./CrawlerInfo";
 
 interface Props {
   stages: StageResult[];
@@ -13,6 +15,8 @@ export default function FunnelTab({ stages }: Props) {
   const maxTokens = firstStageTokens;
   const rawTokens = firstStageTokens;
   const currentStage = stages.find((s) => s.id === activeStage);
+
+  const hint = currentStage ? STAGE_HINTS[currentStage.id] : "";
 
   return (
     <div style={{ padding: "8px 4px" }}>
@@ -56,8 +60,25 @@ export default function FunnelTab({ stages }: Props) {
             {currentStage.label}
           </div>
           {currentStage.detail}
+          {hint && (
+            <div
+              style={{
+                marginTop: 8,
+                paddingTop: 8,
+                borderTop: `1px solid ${currentStage.color}15`,
+                fontSize: 11,
+                color: "#94a3b8",
+              }}
+            >
+              <span style={{ color: currentStage.color, fontWeight: 600 }}>
+                Tip:{" "}
+              </span>
+              {hint}
+            </div>
+          )}
         </div>
       )}
+      <CrawlerInfo />
     </div>
   );
 }

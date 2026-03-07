@@ -7,6 +7,7 @@ import AIViewTab from "./components/AIViewTab";
 import ScoresTab from "./components/ScoresTab";
 import IssuesTab from "./components/IssuesTab";
 import Footer from "./components/Footer";
+import Explainer from "./components/Explainer";
 
 export default function App() {
   const { result, loading, error } = usePageAnalysis();
@@ -59,6 +60,7 @@ export default function App() {
       {result && (
         <>
           <Header result={result} />
+          <Explainer />
           <TabBar activeTab={activeTab} onTabChange={setActiveTab} />
           <div style={{ maxHeight: 420, overflowY: "auto" }}>
             {activeTab === "funnel" && <FunnelTab stages={result.stages} />}

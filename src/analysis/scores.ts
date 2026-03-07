@@ -23,11 +23,12 @@ export function computeContentDensity(
   markdownTokens: number
 ): Score {
   const ratio = rawTokens > 0 ? (markdownTokens / rawTokens) * 100 : 0;
-  return makeScore(
-    "Content Density",
-    ratio,
-    `Only ${Math.round(ratio)}% of your page tokens are actual content. The rest is packaging.`
-  );
+  const roundedRatio = Math.round(ratio);
+  const tip =
+    roundedRatio >= 15
+      ? `${roundedRatio}% of your page is content that AI systems will process. Higher density means your message comes through more clearly.`
+      : `${roundedRatio}% of your page is content that AI systems will process. The rest is structure your site needs for humans \u2014 but AI never sees it.`;
+  return makeScore("Content Density", ratio, tip);
 }
 
 export function computeJsIndependence(
@@ -48,10 +49,10 @@ export function computeJsIndependence(
     capped,
     `${Math.round(capped)}% of content visible without JavaScript. ${
       capped >= 90
-        ? "Excellent — AI crawlers see almost everything."
+        ? "Excellent \u2014 AI crawlers see almost everything."
         : capped >= 70
           ? "Good, but some content is invisible to most AI crawlers."
-          : "Significant content requires JavaScript — invisible to most AI crawlers."
+          : "Significant content requires JavaScript to render. Most AI crawlers \u2014 ChatGPT, Claude, Perplexity, Gemini \u2014 won\u2019t see it."
     }`
   );
 }
@@ -91,7 +92,7 @@ export function computeFrontLoading(
       ? "Key claims appear early in the content. AI systems will find them quickly."
       : ratio >= 50
         ? "Some key terms appear early, but consider front-loading more critical information."
-        : "Key claims don't appear until later in the content. AI may never see them."
+        : "Key claims don\u2019t appear until later in the content. AI systems that truncate input may never reach them \u2014 and most do."
   );
 }
 
@@ -133,7 +134,7 @@ export function computeExtractability(markdownContent: string): Score {
       ? "Content is structured as clear, extractable statements. Great for AI systems."
       : ratio >= 50
         ? "Content is reasonably extractable but could benefit from more declarative statements."
-        : "Content uses complex prose that AI systems may struggle to extract claims from."
+        : "Content uses complex prose that\u2019s harder for AI to extract specific claims from. Declarative statements with concrete details (names, numbers, specifics) are more likely to surface in AI answers."
   );
 }
 
