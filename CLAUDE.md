@@ -17,8 +17,10 @@ TokenLens is a Chrome extension (Manifest V3) that shows publishers what AI syst
 - `src/content/content-script.ts` — Injected into pages, captures rendered DOM + meta + JSON-LD on `ANALYZE_PAGE` message
 - `src/background/service-worker.ts` — Re-fetches page URL via `fetch()` to get raw HTML (what LLM crawlers see without JS) on `FETCH_RAW_HTML` message
 - `src/popup/` — React popup UI, entry point is `index.html` → `main.tsx` → `App.tsx`
+- `src/popup/components/Explainer.tsx` — First-run explainer panel (dismissible, persisted via `chrome.storage.local`)
+- `src/popup/components/CrawlerInfo.tsx` — Expandable "Which AI crawlers?" reference listing known bots and JS behavior
 - `src/analysis/` — Pure analysis engine with no browser API dependencies (testable in Node)
-- `src/shared/` — Type definitions and constants shared across all contexts
+- `src/shared/` — Type definitions, stage metadata, stage hints, and grade constants
 
 **Analysis pipeline** (`src/analysis/pipeline.ts`):
 1. Raw HTML → count tokens on rendered DOM
@@ -37,6 +39,8 @@ TokenLens is a Chrome extension (Manifest V3) that shows publishers what AI syst
 - Analysis runs in popup context (has DOMParser needed by Readability), not in service worker
 - Content script is minimal — only captures data, never runs analysis
 - Inline styles in React components to match the design mockup exactly (`docs/TokenLens_UX_Mockup.jsx`)
+- Diagnostic framing throughout — the site works for humans, TokenLens shows what AI sees (not "X% wasted", but "X% AI-visible")
+- `chrome.storage.local` used for persisting first-run explainer dismiss state (requires `storage` permission)
 
 ## Testing
 
