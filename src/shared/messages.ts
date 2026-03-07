@@ -14,9 +14,8 @@ export interface FetchRawHtmlRequest {
   url: string;
 }
 
-export interface FetchRawHtmlResponse {
-  html?: string;
-  error?: string;
-}
+export type FetchRawHtmlResponse =
+  | { html: string; error?: undefined }
+  | { html?: undefined; error: string };
 
 export type MessageRequest = AnalyzePageRequest | FetchRawHtmlRequest;

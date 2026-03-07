@@ -50,11 +50,11 @@ export default function IssuesTab({ issues }: Props) {
           No issues detected — your page looks good for AI consumption!
         </div>
       )}
-      {issues.map((issue, i) => {
+      {issues.map((issue) => {
         const style = SEVERITY_STYLES[issue.severity];
         return (
           <div
-            key={i}
+            key={`${issue.severity}-${issue.text.slice(0, 30)}`}
             style={{
               display: "flex",
               alignItems: "flex-start",

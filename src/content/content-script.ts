@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener(
       ).map((el) => el.textContent ?? "");
 
       sendResponse({ rawHtml, url, meta, jsonLd });
+      return true;
     }
-    return true;
   }
 );

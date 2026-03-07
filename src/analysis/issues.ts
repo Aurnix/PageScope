@@ -17,8 +17,10 @@ const rules: IssueRule[] = [
   // JS-dependent content
   (ctx) => {
     if (ctx.renderedContentTokens === 0) return null;
-    const jsDependentPct =
-      1 - ctx.fetchedContentTokens / ctx.renderedContentTokens;
+    const jsDependentPct = Math.max(
+      0,
+      1 - ctx.fetchedContentTokens / ctx.renderedContentTokens
+    );
     if (jsDependentPct > 0.3) {
       return {
         severity: "critical",

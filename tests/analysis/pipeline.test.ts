@@ -69,6 +69,37 @@ describe("analyzePage", () => {
     );
   });
 
+  it("detects JS dependency when fetchedHtml has less content", () => {
+    const result = analyzePage({
+      renderedHtml: sampleHtml,
+      fetchedHtml: "<html><head></head><body><p>Minimal content</p></body></html>",
+      url: "https://example.com/spa-page",
+      meta: "A page that relies on JavaScript for content.",
+      jsonLd: [],
+    });
+
+    // JS Independence should be low since fetched HTML has much less content
+    expect(result.scores.jsIndependence.value).toBeLessThan(80);
+
+    // Should produce a JS-dependency issue
+    const jsIssue = result.issues.find((i) => i.text.includes("JavaScript"));
+    expect(jsIssue).toBeDefined();
+  });
+
+  it("falls back to rendered HTML when fetchedHtml is empty", () => {
+    const result = analyzePage({
+      renderedHtml: sampleHtml,
+      fetchedHtml: "",
+      url: "https://example.com/fallback",
+      meta: "Test fallback behavior.",
+      jsonLd: [],
+    });
+
+    // When fetchedHtml is empty, pipeline falls back to renderedHtml
+    // So noJs stage should equal raw stage
+    expect(result.stages[0].tokens).toBe(result.stages[1].tokens);
+  });
+
   it("handles empty HTML gracefully", () => {
     const result = analyzePage({
       renderedHtml: "<html><head></head><body></body></html>",

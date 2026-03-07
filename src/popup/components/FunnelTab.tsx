@@ -8,8 +8,10 @@ interface Props {
 
 export default function FunnelTab({ stages }: Props) {
   const [activeStage, setActiveStage] = useState("markdown");
-  const maxTokens = stages[0]?.tokens ?? 1;
-  const rawTokens = stages[0]?.tokens ?? 1;
+  const firstStageTokens = stages[0]?.tokens ?? 1;
+  // Both used by FunnelBar: maxTokens for bar width scaling, rawTokens for reduction %
+  const maxTokens = firstStageTokens;
+  const rawTokens = firstStageTokens;
   const currentStage = stages.find((s) => s.id === activeStage);
 
   return (

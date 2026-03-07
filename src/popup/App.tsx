@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usePageAnalysis } from "./hooks/usePageAnalysis";
 import Header from "./components/Header";
-import TabBar from "./components/TabBar";
+import TabBar, { type TabId } from "./components/TabBar";
 import FunnelTab from "./components/FunnelTab";
 import AIViewTab from "./components/AIViewTab";
 import ScoresTab from "./components/ScoresTab";
@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   const { result, loading, error } = usePageAnalysis();
-  const [activeTab, setActiveTab] = useState("funnel");
+  const [activeTab, setActiveTab] = useState<TabId>("funnel");
 
   return (
     <div

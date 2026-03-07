@@ -6,8 +6,13 @@ chrome.runtime.onMessage.addListener(
       fetch(msg.url)
         .then((r) => r.text())
         .then((html) => sendResponse({ html }))
-        .catch((err: Error) => sendResponse({ error: err.message }));
+        .catch((err: unknown) =>
+          sendResponse({
+            error:
+              err instanceof Error ? err.message : "Unknown fetch error",
+          })
+        );
+      return true; // keep port open for async response
     }
-    return true;
   }
 );
