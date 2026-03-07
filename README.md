@@ -1,12 +1,12 @@
 # TokenLens
 
-"View Source" for the AI era — see exactly what LLMs actually read when they consume your webpage.
+Your website talks to browsers — TokenLens shows you what it says to AI.
 
-TokenLens is a Chrome extension that shows publishers the progressive token reduction from raw HTML to what an AI system actually ingests, with token counts at every stage and actionable diagnostics.
+TokenLens is a Chrome extension that shows publishers what AI systems actually see when they read a webpage. It visualizes the 5-stage token reduction pipeline from raw HTML to AI-ready text, with diagnostic scores and actionable insights.
 
 ## The Problem
 
-Publishers are told to "optimize for AI search" but have no way to see what LLMs actually ingest from their pages. A typical blog post drops from ~16,000 tokens (HTML) to ~3,200 tokens (markdown) — an 80% reduction. TokenLens makes that invisible process visible.
+Publishers are told to "optimize for AI search" but have no way to see what AI systems actually ingest from their pages. A typical blog post drops from ~16,000 tokens (HTML) to ~3,200 tokens (markdown) — an 80% reduction that's invisible to the publisher. TokenLens makes that translation visible.
 
 ## What It Does
 
@@ -14,18 +14,22 @@ Analyzes the current page through a 5-stage reduction pipeline:
 
 | Stage | What It Shows |
 |-------|--------------|
-| **Raw HTML** | Everything the browser downloads — nav, scripts, CSS, ads, the works |
-| **Without JavaScript** | What AI crawlers actually receive (ChatGPT, Claude, Gemini skip JS) |
-| **Content Only** | After stripping navigation, sidebars, footers, and boilerplate |
-| **AI-Ready Text** | Clean markdown with heading hierarchy — what enters the AI's context |
-| **50-Token Pitch** | Your meta description — often the ONLY thing the AI reads |
+| **Raw HTML** | Your full page as browsers see it — all the structure that makes your site work for humans |
+| **Without JavaScript** | What AI crawlers actually receive (ChatGPT, Claude, Perplexity, Gemini don't run JS) |
+| **Content Only** | After stripping layout and navigation — the same extraction AI systems perform |
+| **AI-Ready Text** | Clean structured text with headings — what actually enters the AI's context window |
+| **50-Token Pitch** | Your meta description — often the only thing that represents you in AI answers |
 
 ### Four Diagnostic Views
 
-- **Token Funnel** — Bar chart showing token counts at each pipeline stage
-- **AI View** — The actual markdown text an LLM would process, plus your 50-token pitch
+- **Token Funnel** — Bar chart showing token counts at each pipeline stage, with per-stage actionable hints
+- **AI View** — The actual text an AI would process, plus your 50-token pitch
 - **Scores** — Content density, JS independence, front-loading, and extractability ratings (A-F)
-- **Issues** — Diagnostic warnings like JS-rendered content, missing meta descriptions, stale dates
+- **Issues** — Diagnostic findings like JS-rendered content, missing meta descriptions, stale dates
+
+### First-Run Experience
+
+A dismissible explainer panel introduces new users to what TokenLens does and why. An expandable "Which AI crawlers?" reference lists known AI bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot) and their JavaScript execution behavior.
 
 ## Quick Start (pre-built)
 
@@ -104,5 +108,6 @@ src/
 ├── background/     # MV3 service worker (fetches raw HTML)
 ├── content/        # Content script (captures rendered DOM)
 ├── popup/          # React popup UI (components, hooks, styles)
-└── shared/         # Types and constants
+│   └── components/ # Header, FunnelTab, ScoresTab, IssuesTab, AIViewTab, Explainer, CrawlerInfo
+└── shared/         # Types, stage metadata, stage hints, and grade constants
 ```
