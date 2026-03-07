@@ -5,7 +5,8 @@
   "description": "See what AI actually sees when it reads your webpage — token counts at every stage of the extraction pipeline.",
   "permissions": [
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "<all_urls>"

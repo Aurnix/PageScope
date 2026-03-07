@@ -6,16 +6,25 @@ export default function Explainer() {
   const [dismissed, setDismissed] = useState(true);
 
   useEffect(() => {
-    chrome.storage.local.get(STORAGE_KEY, (result) => {
-      setDismissed(result[STORAGE_KEY] === true);
-    });
+    try {
+      chrome.storage.local.get(STORAGE_KEY, (result) => {
+        setDismissed(result[STORAGE_KEY] === true);
+      });
+    } catch {
+      // If storage is unavailable, show the explainer
+      setDismissed(false);
+    }
   }, []);
 
   if (dismissed) return null;
 
   const handleDismiss = () => {
     setDismissed(true);
-    chrome.storage.local.set({ [STORAGE_KEY]: true });
+    try {
+      chrome.storage.local.set({ [STORAGE_KEY]: true });
+    } catch {
+      // Best-effort persist
+    }
   };
 
   return (
