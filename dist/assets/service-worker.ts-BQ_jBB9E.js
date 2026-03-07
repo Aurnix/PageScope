@@ -1,0 +1,1 @@
+chrome.runtime.onMessage.addListener((r,n,t)=>{if(r.type==="FETCH_RAW_HTML")return fetch(r.url).then(e=>e.text()).then(e=>t({html:e})).catch(e=>t({error:e instanceof Error?e.message:"Unknown fetch error"})),!0});

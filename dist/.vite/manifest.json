@@ -6,19 +6,19 @@
     "isEntry": true
   },
   "src/background/service-worker.ts": {
-    "file": "assets/service-worker.ts-CAoe0nfa.js",
+    "file": "assets/service-worker.ts-BQ_jBB9E.js",
     "name": "service-worker.ts",
     "src": "src/background/service-worker.ts",
     "isEntry": true
   },
   "src/content/content-script.ts": {
-    "file": "assets/content-script.ts-Xigk8Z6W.js",
+    "file": "assets/content-script.ts-CTaMhEPi.js",
     "name": "content-script.ts",
     "src": "src/content/content-script.ts",
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-BlnDrrch.js",
+    "file": "assets/index.html-C0_6BlDd.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
