@@ -17,7 +17,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script.ts-Xigk8Z6W.js"
+        "assets/content-script.ts-CTaMhEPi.js"
       ],
       "matches": [
         "<all_urls>"
@@ -40,7 +40,7 @@
         "<all_urls>"
       ],
       "resources": [
-        "assets/content-script.ts-Xigk8Z6W.js"
+        "assets/content-script.ts-CTaMhEPi.js"
       ],
       "use_dynamic_url": false
     }
